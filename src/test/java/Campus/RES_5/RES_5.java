@@ -19,6 +19,8 @@ public class RES_5 {
     public String positionName;
     public String positionShortName;
     public String positionId;
+
+    public String tenantId = "5fe0786230cc4d59295712cf";
     public Position position = new Position();
 
     @BeforeClass
@@ -51,6 +53,7 @@ public class RES_5 {
 
         position.setName(positionName);
         position.setShortName(positionShortName);
+        position.setTenantId(tenantId);
 
         positionId =
                 given()
@@ -75,11 +78,12 @@ public class RES_5 {
         return RandomStringUtils.randomAlphabetic(3).toLowerCase();
     }
 
-    @Test(dependsOnMethods = "addPosition")
+    @Test(dependsOnMethods = "addPosition", priority = 1)
     public void addPositionNegative()
     {
         position.setName(positionName);
         position.setShortName(positionShortName);
+        position.setTenantId(tenantId);
 
         given()
                 .cookies(cookies)
@@ -97,7 +101,7 @@ public class RES_5 {
 
     }
 
-    @Test(dependsOnMethods = "addPosition")
+    @Test(dependsOnMethods = "addPosition", priority = 2)
     public void editPosition()
     {
         positionName = getRandomName();
@@ -117,9 +121,34 @@ public class RES_5 {
                 .then()
                 .log().body()
                 .statusCode(200)
-                .body("name",equalTo(positionName))
-        ;
+                .body("name",equalTo(positionName));
 
+    }
+
+    @Test (dependsOnMethods = "addPosition", priority = 3)
+    public void deletePositionById()
+    {
+        given()
+                .cookies(cookies)
+                .pathParam("positionId", positionId)
+                .when()
+                .delete("https://demo.mersys.io/school-service/api/employee-position/{positionId}")
+                .then()
+                .log().body()
+                .statusCode(204);
+    }
+
+    @Test (dependsOnMethods = "addPosition", priority = 4)
+    public void deletePositionByIdNegative()
+    {
+        given()
+                .cookies(cookies)
+                .pathParam("positionId", positionId)
+                .when()
+                .delete("https://demo.mersys.io/school-service/api/employee-position/{positionId}")
+                .then()
+                .log().body()
+                .statusCode(204);
     }
 
 

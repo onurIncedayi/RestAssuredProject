@@ -8,6 +8,7 @@ public class Position {
     private String shortName;
     private String id;
     private String[] translateName;
+    private String tenantId;
 
     public String getName() {return name;}
 
@@ -25,6 +26,14 @@ public class Position {
 
     public void setTranslateName(String[] translateName) {this.translateName = translateName;}
 
+    public String getTenantId() {
+        return tenantId;
+    }
+
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId;
+    }
+
     @Override
     public String toString() {
         return "Position{" +
@@ -32,6 +41,7 @@ public class Position {
                 ", shortName='" + shortName + '\'' +
                 ", id='" + id + '\'' +
                 ", translateName=" + Arrays.toString(translateName) +
+                ", tenantId='" + tenantId + '\'' +
                 '}';
     }
 }
