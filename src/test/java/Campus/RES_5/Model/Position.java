@@ -1,10 +1,13 @@
 package Campus.RES_5.Model;
 
+import java.util.Arrays;
+
 public class Position {
 
     private String name;
     private String shortName;
     private String id;
+    private String[] translateName;
 
     public String getName() {return name;}
 
@@ -18,13 +21,17 @@ public class Position {
 
     public void setId(String id) {this.id = id;}
 
+    public String[] getTranslateName() {return translateName;}
+
+    public void setTranslateName(String[] translateName) {this.translateName = translateName;}
+
     @Override
     public String toString() {
-        return "Object{" +
+        return "Position{" +
                 "name='" + name + '\'' +
                 ", shortName='" + shortName + '\'' +
                 ", id='" + id + '\'' +
+                ", translateName=" + Arrays.toString(translateName) +
                 '}';
     }
-
 }

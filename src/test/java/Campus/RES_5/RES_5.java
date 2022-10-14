@@ -4,6 +4,7 @@ import Campus.RES_5.Model.Position;
 import io.restassured.http.ContentType;
 import io.restassured.http.Cookies;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.testng.Assert;
 import org.testng.annotations.*;
 
 import java.util.HashMap;
@@ -14,7 +15,12 @@ import static org.hamcrest.Matchers.*;
 
 public class RES_5 {
 
-    Cookies cookies;
+    public Cookies cookies;
+    public String positionName;
+    public String positionShortName;
+    public String positionId;
+    public Position position = new Position();
+
     @BeforeClass
     public void loginCampus() {
         baseURI = "https://demo.mersys.io/";
@@ -28,10 +34,8 @@ public class RES_5 {
                 given()
                         .contentType(ContentType.JSON)
                         .body(credential)
-
                         .when()
                         .post("auth/login")
-
                         .then()
                         //.log().cookies()
                         .statusCode(200)
@@ -39,16 +43,12 @@ public class RES_5 {
         ;
     }
 
-    String positionName;
-    String positionShortName;
-    String positionId;
 
     @Test
     public void addPosition() {
         positionName = getRandomName();
         positionShortName = getRandomShortName();
 
-        Position position = new Position();
         position.setName(positionName);
         position.setShortName(positionShortName);
 
@@ -78,7 +78,6 @@ public class RES_5 {
     @Test(dependsOnMethods = "addPosition")
     public void addPositionNegative()
     {
-        Position position = new Position();
         position.setName(positionName);
         position.setShortName(positionShortName);
 
@@ -102,8 +101,6 @@ public class RES_5 {
     public void editPosition()
     {
         positionName = getRandomName();
-
-        Position position=new Position();
 
         position.setId(positionId);
         position.setName(positionName);
