@@ -23,6 +23,7 @@ public class NationalityTest {
         baseURI = "https://demo.mersys.io/";
 
         Map<String, String> credential = new HashMap<>();
+
         credential.put("username", "richfield.edu");
         credential.put("password", "Richfield2020!");
         credential.put("rememberMe", "true");
